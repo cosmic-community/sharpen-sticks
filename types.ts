@@ -4,9 +4,9 @@ export interface CosmicObject {
   title: string
   content?: string
   metadata: Record<string, unknown>
-  type: string
-  created_at: string
-  modified_at: string
+  type?: string
+  created_at?: string
+  modified_at?: string
 }
 
 export interface CosmicImage {
@@ -14,8 +14,10 @@ export interface CosmicImage {
   imgix_url: string
 }
 
+// Changed: Added CosmicFile alias to match types/index.ts usage
+export type CosmicFile = CosmicImage
+
 export interface Category extends CosmicObject {
-  type: 'categories'
   metadata: {
     name?: string
     description?: string
@@ -24,12 +26,11 @@ export interface Category extends CosmicObject {
 }
 
 export interface Product extends CosmicObject {
-  type: 'products'
   metadata: {
     name?: string
     description?: string
     price?: number
-    inventory_status?: string
+    inventory_status?: string | { key: string; value: string }
     featured_image?: CosmicImage
     gallery?: CosmicImage[]
     category?: Category
@@ -37,10 +38,9 @@ export interface Product extends CosmicObject {
 }
 
 export interface Review extends CosmicObject {
-  type: 'reviews'
   metadata: {
     reviewer_name?: string
-    rating?: number
+    rating?: number | string | { key: string; value: string }
     comment?: string
     product?: Product
   }
@@ -51,4 +51,14 @@ export interface CosmicResponse<T> {
   total: number
   limit: number
   skip: number
+}
+
+// Changed: Added TeamMember type (merged from types/index.ts)
+export interface TeamMember extends CosmicObject {
+  metadata: {
+    name: string
+    role: string
+    bio?: string
+    photo?: CosmicImage
+  }
 }
