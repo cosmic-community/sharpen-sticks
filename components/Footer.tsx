@@ -44,6 +44,12 @@ export default function Footer() {
                   Categories
                 </Link>
               </li>
+              {/* Changed: Added Team link to footer navigation */}
+              <li>
+                <Link href="/team" className="text-sm text-bark-400 hover:text-white transition-colors">
+                  Our Team
+                </Link>
+              </li>
               <li>
                 <Link href="/reviews" className="text-sm text-bark-400 hover:text-white transition-colors">
                   Reviews

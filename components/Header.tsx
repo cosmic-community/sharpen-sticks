@@ -10,6 +10,7 @@ export default function Header() {
     { href: '/', label: 'Home', emoji: '🏠' },
     { href: '/products', label: 'Products', emoji: '🖊️' },
     { href: '/categories', label: 'Categories', emoji: '🏷️' },
+    { href: '/team', label: 'Team', emoji: '👋' },
     { href: '/reviews', label: 'Reviews', emoji: '⭐' }
   ]
 

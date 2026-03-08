@@ -1,18 +1,21 @@
 import Link from 'next/link'
-import { getProducts, getCategories, getReviews, getMetafieldValue } from '@/lib/cosmic'
+import { getProducts, getCategories, getReviews, getTeamMembers, getMetafieldValue } from '@/lib/cosmic'
 import ProductCard from '@/components/ProductCard'
 import CategoryCard from '@/components/CategoryCard'
 import ReviewCard from '@/components/ReviewCard'
+import TeamMemberCard from '@/components/TeamMemberCard'
 
 export default async function HomePage() {
-  const [products, categories, reviews] = await Promise.all([
+  const [products, categories, reviews, teamMembers] = await Promise.all([
     getProducts(),
     getCategories(),
-    getReviews()
+    getReviews(),
+    getTeamMembers()
   ])
 
   const featuredProducts = products.slice(0, 3)
   const featuredReviews = reviews.slice(0, 3)
+  const featuredTeam = teamMembers.slice(0, 4)
 
   return (
     <div>
@@ -138,34 +141,68 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Reviews */}
-      {featuredReviews.length > 0 && (
+      {/* Changed: Added Team Section */}
+      {featuredTeam.length > 0 && (
         <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-12">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-wider text-cream-600 mb-1">
-                What People Say
+              <p className="text-sm font-semibold uppercase tracking-wider text-wood-600 mb-1">
+                The Makers
               </p>
-              <h2 className="section-heading">Customer Reviews</h2>
-              <p className="section-subheading">Hear from our happy pen lovers</p>
+              <h2 className="section-heading">Meet Our Team</h2>
+              <p className="section-subheading">The creative kids behind every stick pen</p>
             </div>
             <Link
-              href="/reviews"
+              href="/team"
               className="hidden sm:inline-flex items-center gap-1 text-sm font-semibold text-forest-600 hover:text-forest-700 transition-colors"
             >
-              View all reviews
+              Meet everyone
               <span aria-hidden="true">→</span>
             </Link>
           </div>
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {featuredReviews.map((review) => (
-              <ReviewCard key={review.id} review={review} />
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {featuredTeam.map((member) => (
+              <TeamMemberCard key={member.id} member={member} />
             ))}
           </div>
           <div className="mt-8 text-center sm:hidden">
-            <Link href="/reviews" className="btn-secondary">
-              View all reviews →
+            <Link href="/team" className="btn-secondary">
+              Meet everyone →
             </Link>
+          </div>
+        </section>
+      )}
+
+      {/* Reviews */}
+      {featuredReviews.length > 0 && (
+        <section className="bg-white border-y border-bark-100">
+          <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+            <div className="flex items-end justify-between mb-12">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-wider text-cream-600 mb-1">
+                  What People Say
+                </p>
+                <h2 className="section-heading">Customer Reviews</h2>
+                <p className="section-subheading">Hear from our happy pen lovers</p>
+              </div>
+              <Link
+                href="/reviews"
+                className="hidden sm:inline-flex items-center gap-1 text-sm font-semibold text-forest-600 hover:text-forest-700 transition-colors"
+              >
+                View all reviews
+                <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {featuredReviews.map((review) => (
+                <ReviewCard key={review.id} review={review} />
+              ))}
+            </div>
+            <div className="mt-8 text-center sm:hidden">
+              <Link href="/reviews" className="btn-secondary">
+                View all reviews →
+              </Link>
+            </div>
           </div>
         </section>
       )}

@@ -1,5 +1,5 @@
 import { createBucketClient } from '@cosmicjs/sdk'
-import type { Product, Category, Review } from '@/types'
+import type { Product, Category, Review, TeamMember } from '@/types'
 
 export const cosmic = createBucketClient({
   bucketSlug: process.env.COSMIC_BUCKET_SLUG as string,
@@ -134,5 +134,22 @@ export async function getReviewsByProduct(productId: string): Promise<Review[]> 
       return []
     }
     throw new Error('Failed to fetch reviews for product')
+  }
+}
+
+// Changed: Added getTeamMembers function for the new team section
+export async function getTeamMembers(): Promise<TeamMember[]> {
+  try {
+    const response = await cosmic.objects
+      .find({ type: 'team-members' })
+      .props(['id', 'title', 'slug', 'metadata', 'created_at'])
+      .depth(1)
+
+    return response.objects as TeamMember[]
+  } catch (error) {
+    if (hasStatus(error) && error.status === 404) {
+      return []
+    }
+    throw new Error('Failed to fetch team members')
   }
 }
