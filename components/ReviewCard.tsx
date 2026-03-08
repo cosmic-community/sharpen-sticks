@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import StarRating from '@/components/StarRating'
+import { getMetafieldValue } from '@/lib/cosmic'
 import type { Review } from '@/types'
 
 interface ReviewCardProps {
@@ -9,7 +10,9 @@ interface ReviewCardProps {
 
 export default function ReviewCard({ review, showProduct = true }: ReviewCardProps) {
   const reviewerName = review.metadata?.reviewer_name || 'Anonymous'
-  const rating = review.metadata?.rating || 0
+  // Changed: Extract numeric rating from select-dropdown object using getMetafieldValue
+  const ratingStr = getMetafieldValue(review.metadata?.rating)
+  const rating = isNaN(Number(ratingStr)) ? 0 : Number(ratingStr)
   const comment = review.metadata?.comment || ''
   const product = review.metadata?.product
 

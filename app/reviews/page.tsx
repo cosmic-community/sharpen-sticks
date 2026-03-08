@@ -1,4 +1,4 @@
-import { getReviews } from '@/lib/cosmic'
+import { getReviews, getMetafieldValue } from '@/lib/cosmic'
 import ReviewCard from '@/components/ReviewCard'
 import Link from 'next/link'
 
@@ -10,8 +10,13 @@ export const metadata = {
 export default async function ReviewsPage() {
   const reviews = await getReviews()
 
+  // Changed: Extract numeric rating from select-dropdown object using getMetafieldValue
   const averageRating = reviews.length > 0
-    ? reviews.reduce((sum, r) => sum + (r.metadata?.rating || 0), 0) / reviews.length
+    ? reviews.reduce((sum, r) => {
+        const ratingStr = getMetafieldValue(r.metadata?.rating)
+        const ratingNum = Number(ratingStr)
+        return sum + (isNaN(ratingNum) ? 0 : ratingNum)
+      }, 0) / reviews.length
     : 0
 
   return (

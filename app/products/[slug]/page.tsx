@@ -29,8 +29,13 @@ export default async function ProductDetailPage({
 
   const isInStock = inventoryStatus.toLowerCase().includes('in') || inventoryStatus.toLowerCase().includes('stock') || inventoryStatus.toLowerCase().includes('available')
 
+  // Changed: Extract numeric rating from select-dropdown object using getMetafieldValue
   const averageRating = reviews.length > 0
-    ? reviews.reduce((sum, r) => sum + (r.metadata?.rating || 0), 0) / reviews.length
+    ? reviews.reduce((sum, r) => {
+        const ratingStr = getMetafieldValue(r.metadata?.rating)
+        const ratingNum = Number(ratingStr)
+        return sum + (isNaN(ratingNum) ? 0 : ratingNum)
+      }, 0) / reviews.length
     : 0
 
   return (
@@ -97,9 +102,9 @@ export default async function ProductDetailPage({
               </Link>
             )}
 
-            <h1 className="text-3xl font-bold text-bark-900 sm:text-4xl">
-              {name}
-            </h1>
+              <h1 className="text-3xl font-bold text-bark-900 sm:text-4xl">
+                {name}
+              </h1>
 
             {/* Rating Summary */}
             {reviews.length > 0 && (
