@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { getProducts, getCategories, getReviews, getTeamMembers, getMetafieldValue } from '@/lib/cosmic'
 import ProductCard from '@/components/ProductCard'
 import CategoryCard from '@/components/CategoryCard'
@@ -29,26 +30,43 @@ export default async function HomePage() {
           <div className="absolute top-20 left-1/2 text-5xl">✏️</div>
         </div>
         <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-40">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-medium text-forest-100 backdrop-blur-sm mb-6">
-              <span>🌍</span>
-              <span>Made by kids, for the planet</span>
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-medium text-forest-100 backdrop-blur-sm mb-6">
+                <span>🌍</span>
+                <span>Made by kids, for the planet</span>
+              </div>
+              <h1 className="text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-7xl">
+                Sharpen
+                <span className="block text-cream-300">Sticks</span>
+              </h1>
+              <p className="mt-6 text-lg leading-relaxed text-forest-100 sm:text-xl max-w-2xl">
+                We&apos;re a team of 3rd-5th graders on a mission to save the planet — one stick pen at a time.
+                Every pen is handcrafted from real sticks for sustainable, eco-friendly office supplies.
+              </p>
+              <div className="mt-10 flex flex-wrap gap-4">
+                <Link href="/products" className="btn-primary !bg-white !text-forest-700 hover:!bg-cream-100 !px-8 !py-4 !text-base">
+                  🖊️ Shop Our Pens
+                </Link>
+                <Link href="/categories" className="btn-secondary !border-white/40 !text-white hover:!bg-white/10 !px-8 !py-4 !text-base">
+                  Browse Categories
+                </Link>
+              </div>
             </div>
-            <h1 className="text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-7xl">
-              Sharpen
-              <span className="block text-cream-300">Sticks</span>
-            </h1>
-            <p className="mt-6 text-lg leading-relaxed text-forest-100 sm:text-xl max-w-2xl">
-              We&apos;re a team of 3rd-5th graders on a mission to save the planet — one stick pen at a time.
-              Every pen is handcrafted from real sticks for sustainable, eco-friendly office supplies.
-            </p>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Link href="/products" className="btn-primary !bg-white !text-forest-700 hover:!bg-cream-100 !px-8 !py-4 !text-base">
-                🖊️ Shop Our Pens
-              </Link>
-              <Link href="/categories" className="btn-secondary !border-white/40 !text-white hover:!bg-white/10 !px-8 !py-4 !text-base">
-                Browse Categories
-              </Link>
+            <div className="relative hidden lg:block">
+              <div className="relative aspect-square overflow-hidden rounded-3xl border-4 border-white/20 shadow-2xl">
+                <Image
+                  src="https://imgix.cosmicjs.com/2b346a60-1b13-11f1-9f8d-1beb8341a7a3-autopilot-photo-1568219656418-15c329312bf1-1772990456770.jpeg"
+                  alt="The Oak Writer - Our best-selling handcrafted stick pen"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+              <div className="absolute -bottom-4 -left-4 rounded-2xl bg-white/90 backdrop-blur-sm px-5 py-3 shadow-lg">
+                <p className="text-sm font-bold text-forest-700">⭐ Best Seller</p>
+                <p className="text-xs text-bark-500">The Oak Writer</p>
+              </div>
             </div>
           </div>
         </div>
