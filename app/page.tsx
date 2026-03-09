@@ -18,12 +18,6 @@ export default async function HomePage() {
   const featuredReviews = reviews.slice(0, 3)
   const featuredTeam = teamMembers.slice(0, 4)
 
-  // Get hero image from the first product's featured image
-  const heroProduct = products[0]
-  const heroImageUrl = heroProduct?.metadata?.featured_image
-    ? `https://imgix.cosmicjs.com/${heroProduct.metadata.featured_image}`
-    : null
-
   return (
     <div>
       {/* Hero Section */}
@@ -36,7 +30,7 @@ export default async function HomePage() {
           <div className="absolute top-20 left-1/2 text-5xl">✏️</div>
         </div>
         <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-40">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-medium text-forest-100 backdrop-blur-sm mb-6">
                 <span>🌍</span>
@@ -59,23 +53,21 @@ export default async function HomePage() {
                 </Link>
               </div>
             </div>
-            {heroImageUrl && (
-              <div className="relative hidden lg:block">
-                <div className="relative aspect-square w-full max-w-lg mx-auto rounded-3xl overflow-hidden shadow-2xl ring-4 ring-white/20">
-                  <Image
-                    src={heroImageUrl}
-                    alt={heroProduct?.metadata?.name || 'Featured stick pen'}
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                </div>
-                <div className="absolute -bottom-4 -left-4 bg-white/90 backdrop-blur-sm rounded-2xl px-4 py-3 shadow-lg">
-                  <p className="text-sm font-bold text-forest-700">⭐ Featured Pen</p>
-                  <p className="text-xs text-bark-500">{heroProduct?.metadata?.name}</p>
-                </div>
+            <div className="relative hidden lg:block">
+              <div className="relative aspect-square overflow-hidden rounded-3xl border-4 border-white/20 shadow-2xl">
+                <Image
+                  src="https://imgix.cosmicjs.com/2b346a60-1b13-11f1-9f8d-1beb8341a7a3-autopilot-photo-1568219656418-15c329312bf1-1772990456770.jpeg"
+                  alt="The Oak Writer - Our best-selling handcrafted stick pen"
+                  fill
+                  className="object-cover"
+                  priority
+                />
               </div>
-            )}
+              <div className="absolute -bottom-4 -left-4 rounded-2xl bg-white/90 backdrop-blur-sm px-5 py-3 shadow-lg">
+                <p className="text-sm font-bold text-forest-700">⭐ Best Seller</p>
+                <p className="text-xs text-bark-500">The Oak Writer</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -161,7 +153,7 @@ export default async function HomePage() {
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {categories.map((category) => (
                 <CategoryCard key={category.id} category={category} />
-              )}
+              ))}
             </div>
           </div>
         </section>
